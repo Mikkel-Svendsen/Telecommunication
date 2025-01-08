@@ -12,9 +12,7 @@
     mychar = 4+65-1 = 68 = 'D'
     The resulting charactor in mychar is D
   
-  6c
-
-
+  6c.
 */
 
 char incomingByte = 0;
