@@ -51,14 +51,16 @@ unsigned long timeBetweenLEDs = 100;
 
 
 // prototype functions:
-void turnOfLEDs();
+void turnOffLEDs();
 void flashingLEDs();
 void miss();
 void hit();
 void updateHits(int counter);
 void winnerWinnerChickenDinner();
 
-
+/**
+ * @brief Setup function
+ */
 void setup() {
   // put your setup code here, to run once:
   pinMode(buttonPin, INPUT);
@@ -75,7 +77,9 @@ void setup() {
 
 
 }
-
+/**
+ * @brief Main loop
+ */
 void loop() {
 
   // reset hitFlag
@@ -102,7 +106,7 @@ void loop() {
 
 
   // turn all LED's off (reduce redundant code)
-  turnOfLEDs();
+  turnOffLEDs();
 
   ////////////////////// Normal leds ////////////////////////
   if (hitCounter < 8) {
@@ -230,7 +234,10 @@ void loop() {
 }
 
 
-void turnOfLEDs() {
+/**
+ * @brief Turns off LEDs. Methods is used to minimize lines in loop.
+ */
+void turnOffLEDs() {
   digitalWrite(R1Pin, LOW);
   digitalWrite(R2Pin, LOW);
   digitalWrite(Y1Pin, LOW);
@@ -238,6 +245,9 @@ void turnOfLEDs() {
   digitalWrite(GPin, LOW);
 }
 
+/**
+ * @brief Flashes LEDs on and off within 0.2 seconds. The method is used for when you hit the green LED or when you win.
+ */
 void flashingLEDs() {
   for (int i = 0; i < 5; i++) {
     digitalWrite(R1Pin, HIGH);
@@ -255,13 +265,19 @@ void flashingLEDs() {
   }
 }
 
+/**
+ * @brief Counts misses and updates miss counter on LCD.
+ */
 void miss() {
-  turnOfLEDs();
+  turnOffLEDs();
   missCounter++;
   updateHits(missCounter, 13);
   delay(1000);
 }
 
+/**
+ * @brief Counts hits and updates hit counter on LCD
+ */
 void hit() {
   flashingLEDs();
   hitCounter++;
@@ -269,11 +285,19 @@ void hit() {
 
 }
 
+/**
+ * @brief Updates hit or miss counter on LCD based on the counter and the location
+ * @param Counter to use
+ * @param location on LCD 
+ */
 void updateHits(int counter, int location) {
   lcd.setCursor(location, 0);
   lcd.print(counter);
 }
 
+/**
+ * @brief Prints Winner text on LCD
+ */
 void winnerWinnerChickenDinner() {
     for (int i = 0; i < 3; i++){
       flashingLEDs();
